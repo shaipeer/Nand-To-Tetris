@@ -1,0 +1,74 @@
+/**
+   |====================================================|
+   |	  	Exercise #  :	 1							|
+   |													|
+   |   	   	File name   :	 Main.jack					|
+   |		Date		:	 14/03/2015    	      		|
+   |		Author    	:	 Shai Pe'er        			|
+   |		ID        	: 	 032571580         			|
+   |		Email     	:	 shaip86@gmail.com 			|
+   |====================================================|
+ */
+ 
+class Ship 
+{
+
+    field int locX, locY;
+	
+	field int SCREEN_SIZE;
+	field int SIZE;
+	
+    constructor Ship new(int startX, int startY) 
+	{
+        let locX = startX;
+        let locY = startY;
+		
+		let SIZE = 2;
+		let SCREEN_SIZE = 510;
+        do drawShip();
+
+        return this;
+    }
+
+    method void deAllocShip()
+	{
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void drawShip()
+	{
+		do Screen.setColor(true);
+        do Screen.drawRectangle(locX, locY, locX + SIZE, locY + SIZE);
+        return;
+    }
+	
+    method void eraseShip()
+	{
+        do Screen.setColor(false);
+        do Screen.Rectangle(locX, locY, locX + SIZE, locY + SIZE);
+        return;
+    }
+	
+    method void moveLeft() 
+	{
+        if (locX > 1) 
+		{            
+            do eraseShip();
+            let locX = locX - 3;            
+            do drawShip();
+        }
+        return;
+    }
+
+    method void moveRight() 
+	{
+        if ((locX + SIZE) < SCREEN_SIZE) 
+		{
+            do eraseShip();
+            let locX = locX + 3;
+            do drawShip();
+        }
+        return;
+    }
+}

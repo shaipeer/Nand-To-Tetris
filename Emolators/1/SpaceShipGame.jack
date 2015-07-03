@@ -1,0 +1,126 @@
+/**
+   |====================================================|
+   |	  	Exercise #  :	 1							|
+   |													|
+   |   	   	File name   :	 SpaceShipGame.jack			|
+   |		Date		:	 14/03/2015    	      		|
+   |		Author    	:	 Shai Pe'er        			|
+   |		ID        	: 	 032571580         			|
+   |		Email     	:	 shaip86@gmail.com 			|
+   |====================================================|
+ */
+ 
+ /**
+  * The SpaceShipGame class implements the Space Ship game.
+  * In this game you need to hit the enemy ships with your  missiles.
+  * After hitting a enemy, another will come.
+  * you can launch only one missile at a time.
+  * To navigate the ship, use the 'right' and 'left' arrows.
+  * To stop the ship press 'up' or 'down' arrows
+  * To launch a missile use the 'Space' key;
+  * To quit the game use 'Q' key.
+  */
+class SpaceShipGame {
+
+    field Ship ship;
+	field Enemy enemy;
+	field Missile missile;
+
+    field int direction; // 0=none,1=left,2=right
+
+    constructor SpaceShipGame new()
+	{
+        let ship = Ship.new();
+		let missile = Missile.new();
+		let enemy = Enemy.new();
+		let direction = 0;
+		
+        return this;
+    }
+	
+	//The function deallocate all objects created by the game
+    method void deAllocAll()
+	{
+        do ship.deAllocShip();
+        do missile.deAllocMissile();
+		do enemy.deAllocEnemy();
+		do Memory.deAlloc(this);
+		
+        return;
+    }
+
+	//The function runs the game and manages the inputs from the user that controls the ship movement and the missile launch.
+    method void runGame()
+	{
+        var char key;
+        var boolean exit;
+
+        let exit = false;
+
+        while (~exit)
+		{
+            while (key = 0)
+			{
+                let key = Keyboard.keyPressed();
+                do makeMove();
+            }
+
+            if (key = 81)  {	let exit = true;		}	//Q 	- exit
+            if (key = 131) {	let direction = 0;		}	//up 	- stop
+            if (key = 133) {	let direction = 0;		}	//down 	- stop
+            if (key = 130) {	let direction = 1;		}	//left	- move left
+            if (key = 132) {	let direction = 2;		}	//right	- move right
+			if (key = 32)  {	do  launchMissile();	}	//SPACE - launch missile
+			
+            while (~(key = 0))
+			{
+                let key = Keyboard.keyPressed();
+                do makeMove();
+            }
+        }
+            
+        return;
+	}
+	
+	//The function move each object one step
+	method void makeMove()
+	{
+		do moveShip();
+		do missile.moveMissile();
+		do enemy.moveEnemy();
+		do checkHit();
+		
+		return;
+	}
+	
+	//The function check if the missile hit the enemy, if does, kill the missile and the enemy
+	method void checkHit()
+	{
+		if(enemy.isHit(missile.getX(), missile.getY()))
+		{
+			do missile.killMissile();
+			do enemy.killEnemy();
+		}
+		return;
+	}
+	
+	//The function moving the ship left or right, depend on the 'direction' value
+    method void moveShip() 
+	{	
+        if (direction = 1)	{	do ship.moveLeft();		}
+        if (direction = 2)	{	do ship.moveRight();	}
+
+        do Sys.wait(5); // Delays the next movement.
+        return;
+    }
+	
+	//The function launches a missile
+	method void launchMissile()
+	{
+		if (missile.freeToLaunch())
+		{
+			do missile.launchMissile(ship.getLocation());
+		}
+		return;
+	}	
+}

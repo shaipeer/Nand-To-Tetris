@@ -1,0 +1,108 @@
+function Ship.new 0
+push constant 4
+call Memory.alloc 1
+pop pointer 0
+push argument 0
+pop this 0
+push argument 1
+pop this 1
+push constant 2
+pop this 3
+push constant 510
+pop this 2
+push pointer 0
+call Ship.drawShip 1
+pop temp 0
+push pointer 0
+return
+function Ship.deAllocShip 0
+push argument 0
+pop pointer 0
+push pointer 0
+call Memory.deAlloc 1
+pop temp 0
+push constant 0
+return
+function Ship.drawShip 0
+push argument 0
+pop pointer 0
+push constant 0
+not
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 3
+add
+push this 1
+push this 3
+add
+call Screen.drawRectangle 4
+pop temp 0
+push constant 0
+return
+function Ship.eraseShip 0
+push argument 0
+pop pointer 0
+push constant 0
+call Screen.setColor 1
+pop temp 0
+push this 0
+push this 1
+push this 0
+push this 3
+add
+push this 1
+push this 3
+add
+call Screen.Rectangle 4
+pop temp 0
+push constant 0
+return
+function Ship.moveLeft 0
+push argument 0
+pop pointer 0
+push this 0
+push constant 1
+gt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Ship.eraseShip 1
+pop temp 0
+push this 0
+push constant 3
+sub
+pop this 0
+push pointer 0
+call Ship.drawShip 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return
+function Ship.moveRight 0
+push argument 0
+pop pointer 0
+push this 0
+push this 3
+add
+push this 2
+lt
+if-goto IF_TRUE0
+goto IF_FALSE0
+label IF_TRUE0
+push pointer 0
+call Ship.eraseShip 1
+pop temp 0
+push this 0
+push constant 3
+add
+pop this 0
+push pointer 0
+call Ship.drawShip 1
+pop temp 0
+label IF_FALSE0
+push constant 0
+return

@@ -1,0 +1,95 @@
+/**
+   |====================================================|
+   |	  	Exercise #  :	 1							|
+   |													|
+   |   	   	File name   :	 Enemy.jack					|
+   |		Date		:	 14/03/2015    	      		|
+   |		Author    	:	 Shai Pe'er        			|
+   |		ID        	: 	 032571580         			|
+   |		Email     	:	 shaip86@gmail.com 			|
+   |====================================================|
+ */
+ 
+class Enemy 
+{
+
+    field int locX, locY;
+	
+	field int SCREEN_SIZE;
+	field int SIZE;
+	
+    constructor Enemy new() 
+	{
+        let locX = 200;
+        let locY = 0;
+		
+		let SIZE = 3;
+		let SCREEN_SIZE = 510;
+
+        return this;
+    }
+
+    method void deAllocEnemy()
+	{
+        do Memory.deAlloc(this);
+        return;
+    }
+
+    method void drawEnemy()
+	{
+		do Screen.setColor(true);
+        do drawShape();
+		return;
+    }
+	
+	method void eraseEnemy()
+	{
+        do Screen.setColor(false);
+		do drawShape();
+        return;
+    }
+	
+	method void drawShape()
+	{
+		do Screen.drawRectangle(locX+(SIZE*1), locY+(SIZE*1), locX + (SIZE*3), locY + (SIZE*6));
+		do Screen.drawRectangle(locX+(SIZE*0), locY+(SIZE*0), locX + (SIZE*1), locY + (SIZE*2));
+		do Screen.drawRectangle(locX+(SIZE*6), locY+(SIZE*0), locX + (SIZE*7), locY + (SIZE*2));
+		do Screen.drawRectangle(locX+(SIZE*3), locY+(SIZE*0), locX + (SIZE*4), locY + (SIZE*4));
+		
+		return;
+	}
+	
+    method void launcheEnemy(int startLocX)
+	{
+		let locX = startLocX;
+		let locY = 211;
+		let launched = true;
+		
+		return;
+	}
+	
+    method void moveEnemy() 
+	{
+		if (locY < 200) 
+		{            
+			do eraseEnemy();
+			if (locY + 2 < 200)
+			{
+				let locY = locY + 2;            
+				do drawEnemy();
+			}
+			if (locY + 2 < 200)
+			{
+				do eraseEnemy();
+				let locY = 0;
+			}
+		}
+		return;
+        
+	}
+	
+	method int getLocation()
+	{
+		return locX+4;
+	}
+}

@@ -1,0 +1,104 @@
+/**
+   |====================================================|
+   |	  	Exercise #  :	 1							|
+   |													|
+   |   	   	File name   :	 Ship.jack					|
+   |		Date		:	 14/03/2015    	      		|
+   |		Author    	:	 Shai Pe'er        			|
+   |		ID        	: 	 032571580         			|
+   |		Email     	:	 shaip86@gmail.com 			|
+   |====================================================|
+ */
+ 
+ /**
+  * The Ship class implements a ship.
+  * The ship has its location (locX,locY) in the screen,
+  * and the size of the screen and the ship.
+  * The Class is also responsible for all the graphics side of the ship. 
+  */
+class Ship 
+{
+    field int locX, locY;	//Represent the location of the ship on she screen
+	
+	field int SCREEN_SIZE;	//Represent the size of the screen
+	field int SIZE;			//Represent the size of the ship block
+	
+	//The constructor define the initial X, Y position and the size of the screen and each block of the ship
+    constructor Ship new() 
+	{
+        let locX = 200;
+        let locY = 210;
+		
+		let SIZE = 3;
+		let SCREEN_SIZE = 510;
+        do drawShip();
+
+        return this;
+    }
+
+	//The function deallocate the object memory
+    method void deAllocShip()
+	{
+        do Memory.deAlloc(this);
+        return;
+    }
+
+	//The function draws a ship on the screen
+    method void drawShip()
+	{
+		do Screen.setColor(true);
+        do drawShape();
+		return;
+    }
+	
+	//The function erase the ship off the screen
+	method void eraseShip()
+	{
+        do Screen.setColor(false);
+        do drawShape();
+        return;
+    }
+	
+	//The function draws the ship shape on the screen
+	method void drawShape()
+	{
+		do Screen.drawRectangle(locX+(SIZE*3), locY+(SIZE*2), locX + (SIZE*6), locY + (SIZE*8));
+		do Screen.drawRectangle(locX+(SIZE*0), locY+(SIZE*6), locX + (SIZE*9), locY + (SIZE*7));
+		do Screen.drawRectangle(locX+(SIZE*1), locY+(SIZE*4), locX + (SIZE*2), locY + (SIZE*6));
+		do Screen.drawRectangle(locX+(SIZE*7), locY+(SIZE*4), locX + (SIZE*8), locY + (SIZE*6));
+		do Screen.drawRectangle(locX+(SIZE*4), locY+(SIZE*0), locX + (SIZE*5), locY + (SIZE*9));
+		
+		return;
+	}
+	
+	//The function moving the ship to the left
+    method void moveLeft() 
+	{
+        if (locX - SIZE > 1) 
+		{            
+            do eraseShip();
+            let locX = locX - SIZE;            
+            do drawShip();
+        }
+        return;
+		
+    }
+	
+	//The function moving the ship to the right
+    method void moveRight() 
+	{
+        if ((locX + (SIZE*10)) < SCREEN_SIZE) 
+		{
+            do eraseShip();
+            let locX = locX + SIZE;
+            do drawShip();
+        }
+        return;
+    }
+	
+	//The function returns the current X location of the ship
+	method int getLocation()
+	{
+		return locX+(SIZE*SIZE);
+	}
+}

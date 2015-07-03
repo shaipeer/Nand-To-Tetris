@@ -1,0 +1,132 @@
+/**
+   |====================================================|
+   |	  	Exercise #  :	 1							|
+   |													|
+   |   	   	File name   :	 Missile.jack				|
+   |		Date		:	 14/03/2015    	      		|
+   |		Author    	:	 Shai Pe'er        			|
+   |		ID        	: 	 032571580         			|
+   |		Email     	:	 shaip86@gmail.com 			|
+   |====================================================|
+ */
+ 
+  /**
+  * The Missile class implements a missile.
+  * The missile has its location (locX,locY) on the screen and the size of the screen.
+  * The Class is also responsible for all the graphics side of the missile. 
+  */
+class Missile 
+{
+
+    field int locX, locY;		//Represent the location of the missile on she screen
+	static boolean launched;	//Represent the status of the missile, if true, missile has been launched
+
+	field int SCREEN_SIZE;		//Represent the size of the screen
+
+	//The constructor define the initial X, Y position and the size of the screen and each block of the missile
+    constructor Missile new() 
+	{
+        let locY = 211;
+		let launched = false;
+		
+		let SCREEN_SIZE = 510;
+
+        return this;
+    }
+
+	//The function deallocate the object memory
+    method void deAllocMissile()
+	{
+        do Memory.deAlloc(this);
+        return;
+    }
+	
+	//The function draws a missile on the screen
+    method void drawMissile()
+	{
+		do Screen.setColor(true);
+        do drawShape();
+		return;
+    }
+	
+	//The function erase the missile off the screen
+	method void eraseMissile()
+	{
+        do Screen.setColor(false);
+        do drawShape();
+        return;
+    }
+	
+	//The function draws the missile shape on the screen
+	method void drawShape()
+	{
+		do Screen.drawRectangle(locX, locY, locX + 2, locY + 6);
+        return;
+	}
+	
+	//The function check if there is a missile on air
+	method boolean freeToLaunch()
+	{
+		var boolean isFreeToLaunch;
+		let isFreeToLaunch= true;
+		
+		if (launched)	{	let isFreeToLaunch = false; }
+		
+		return isFreeToLaunch;
+	}
+	
+	//The function launches a missile start at the given x location
+	method void launchMissile(int startLocX)
+	{
+		//do eraseMissile();
+		let locX = startLocX;
+		let locY = 211;
+		let launched = true;
+		
+		return;
+	}
+	
+	//The function responsible on moving the missile and check if it reaches to the end of the screen
+    method void moveMissile() 
+	{
+		if (launched)
+		{
+			if (locY > 1) 
+			{            
+				do eraseMissile();
+				if (locY - 4 > 1)
+				{
+					let locY = locY - 4;            
+					do drawMissile();
+				}
+				else
+				{
+					do killMissile();
+				}
+			}
+		}
+		return;
+        
+	}
+	
+	//The function returns the X location of the missile
+	method int getX()
+	{
+		return locX;
+	}
+	
+	//The function returns the Y location of the missile
+	method int getY()
+	{
+		return locY;
+	}
+	
+	//The function initial the missile parameters after a hit or reaching to the end of the screen
+	method void killMissile()
+	{
+		do eraseMissile();
+		let launched = false;
+		let locY = 211;
+		return;
+	}
+}
