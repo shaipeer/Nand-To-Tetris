@@ -1,0 +1,38 @@
+// This file is part of the materials accompanying the book 
+// "The Elements of Computing Systems" by Nisan and Schocken, 
+// MIT Press. Book site: www.idc.ac.il/tecs
+// File name: projects/03/b/RAM4K.hdl
+
+/**
+ * Memory of 4K registers, each 16 bit-wide. Out hold the value
+ * stored at the memory location specified by address. If load=1, then 
+ * the in value is loaded into the memory location specified by address 
+ * (the loaded value will be emitted to out after the next time step.)
+ */
+
+CHIP RAM4K {
+    IN in[16], load, address[12];
+    OUT out[16];
+
+    PARTS:
+	
+	//INPUT
+	DMux8Way (in = load, sel = address[9..11],
+			  a = loadDMux8A, b = loadDMux8B, c = loadDMux8C, d = loadDMux8D,
+			  e = loadDMux8E, f = loadDMux8F, g = loadDMux8G, h = loadDMux8H);
+	
+	//RAM512
+	RAM512(in = in, load = loadDMux8A, address = address[0..8], out = Ram512OutA);
+	RAM512(in = in, load = loadDMux8B, address = address[0..8], out = Ram512OutB);
+	RAM512(in = in, load = loadDMux8C, address = address[0..8], out = Ram512OutC);
+	RAM512(in = in, load = loadDMux8D, address = address[0..8], out = Ram512OutD);
+	RAM512(in = in, load = loadDMux8E, address = address[0..8], out = Ram512OutE);
+	RAM512(in = in, load = loadDMux8F, address = address[0..8], out = Ram512OutF);
+	RAM512(in = in, load = loadDMux8G, address = address[0..8], out = Ram512OutG);
+	RAM512(in = in, load = loadDMux8H, address = address[0..8], out = Ram512OutH);
+	
+	//OUTPUT
+	Mux8Way16(a = Ram512OutA, b = Ram512OutB, c = Ram512OutC, d = Ram512OutD,
+			  e = Ram512OutE, f = Ram512OutF, g = Ram512OutG, h = Ram512OutH,
+			  sel = address[9..11], out = out);	
+}

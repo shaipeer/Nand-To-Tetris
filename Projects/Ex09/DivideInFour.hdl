@@ -1,0 +1,21 @@
+/*
+ * Gets a 16-bit number in[16]
+ * a[16] is a 16-bit result of in/4. (The whole part without fractions)
+ * b[16] is the remainder  - in modulo 4(http://en.wikipedia.org/wiki/Modulo_operation)
+ */
+
+CHIP DivideInFour {
+    IN in[16];
+    OUT a[16], b[16];
+
+    PARTS:
+	
+	And16 (a = in, b[0..15] = true, out[0..1] = and01, out[2..15]] = and215);				// and01 = in[0..1] ,  and215 = in[2..15]
+	
+	And16 (a[0..13] = and215, a[14..15] = false, b[0..15] = true, out[0..15] = a[0..15]); 	// a[0..13] =  and215 ,  a[14..15] = 00
+	
+	And16 (a[0..1] = and01, a[2..15] = false, b[0..15] = true, out = b);					// a[0..1] =  and01 ,  a[2..15] = 00000000000000
+	
+	
+	
+}

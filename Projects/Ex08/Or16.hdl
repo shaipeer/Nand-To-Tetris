@@ -1,0 +1,111 @@
+// This file is part of the materials accompanying the book 
+// "The Elements of Computing Systems" by Nisan and Schocken, 
+// MIT Press. Book site: www.idc.ac.il/tecs
+// File name: projects/01/Or16.hdl
+
+
+/**
+ * 16-bit bitwise Or gate: for i=0..15 out[i] = a[i] or b[i].
+ */
+
+CHIP Or16 {
+    IN a[16], b[16];
+    OUT out[16];
+
+    PARTS:
+	//========= 0 =======================
+	Not	(in = a[0], out = not01);
+	Not	(in = b[0], out = not02);
+	And	(a = not01, b = not02, out = x0);
+    Not	(in = x0, out = out[0]);
+	
+	//========= 1 =======================
+	Not	(in = a[1], out = not11);
+	Not	(in = b[1], out = not12);
+	And	(a = not11, b = not12, out = x1);
+    Not	(in = x1, out = out[1]);
+	
+	//========= 2 =======================
+	Not	(in = a[2], out = not21);
+	Not	(in = b[2], out = not22);
+	And	(a = not21, b = not22, out = x2);
+    Not	(in = x2, out = out[2]);
+	
+	//========= 3 =======================
+	Not	(in = a[3], out = not31);
+	Not	(in = b[3], out = not32);
+	And	(a = not31, b = not32, out = x3);
+    Not	(in = x3, out = out[3]);
+	
+	//========= 4 =======================
+	Not	(in = a[4], out = not41);
+	Not	(in = b[4], out = not42);
+	And	(a = not41, b = not42, out = x4);
+    Not	(in = x4, out = out[4]);
+	
+	//========= 5 =======================
+	Not	(in = a[5], out = not51);
+	Not	(in = b[5], out = not52);
+	And	(a = not51, b = not52, out = x5);
+    Not	(in = x5, out = out[5]);
+	
+	//========= 6 =======================
+	Not	(in = a[6], out = not61);
+	Not	(in = b[6], out = not62);
+	And	(a = not61, b = not62, out = x6);
+    Not	(in = x6, out = out[6]);
+	
+	//========= 7 =======================
+	Not	(in = a[7], out = not71);
+	Not	(in = b[7], out = not72);
+	And	(a = not71, b = not72, out = x7);
+    Not	(in = x7, out = out[7]);
+	
+	//========= 8 =======================
+	Not	(in = a[8], out = not81);
+	Not	(in = b[8], out = not82);
+	And	(a = not81, b = not82, out = x8);
+    Not	(in = x8, out = out[8]);
+	
+	//========= 9 =======================
+	Not	(in = a[9], out = not91);
+	Not	(in = b[9], out = not92);
+	And	(a = not91, b = not92, out = x9);
+    Not	(in = x9, out = out[9]);
+	
+	//========= 10 =======================
+	Not	(in = a[10], out = not101);
+	Not	(in = b[10], out = not102);
+	And	(a = not101, b = not102, out = x10);
+    Not	(in = x10, out = out[10]);
+	
+	//========= 11 =======================
+	Not	(in = a[11], out = not111);
+	Not	(in = b[11], out = not112);
+	And	(a = not111, b = not112, out = x11);
+    Not	(in = x11, out = out[11]);
+	
+	//========= 12 =======================
+	Not	(in = a[12], out = not121);
+	Not	(in = b[12], out = not122);
+	And	(a = not121, b = not122, out = x12);
+    Not	(in = x12, out = out[12]);
+	
+	//========= 13 =======================
+	Not	(in = a[13], out = not131);
+	Not	(in = b[13], out = not132);
+	And	(a = not131, b = not132, out = x13);
+    Not	(in = x13, out = out[13]);
+	
+	//========= 14 =======================
+	Not	(in = a[14], out = not141);
+	Not	(in = b[14], out = not142);
+	And	(a = not141, b = not142, out = x14);
+    Not	(in = x14, out = out[14]);
+	
+	//========= 15 =======================
+	Not	(in = a[15], out = not151);
+	Not	(in = b[15], out = not152);
+	And	(a = not151, b = not152, out = x15);
+    Not	(in = x15, out = out[15]);
+}

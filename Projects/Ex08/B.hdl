@@ -1,0 +1,14 @@
+
+/**
+ * out = b  
+ */
+
+CHIP B {
+    IN a, b;
+    OUT out;
+
+    PARTS:
+    
+	Not(in = b, out = notb);
+	Not(in = notb, out = out);
+}

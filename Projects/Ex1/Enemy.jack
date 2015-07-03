@@ -1,0 +1,146 @@
+/**
+   |====================================================|
+   |	  	Exercise #  :	 1							|
+   |													|
+   |   	   	File name   :	 Enemy.jack					|
+   |		Date		:	 14/03/2015    	      		|
+   |		Author    	:	 Shai Pe'er        			|
+   |		Email     	:	 shaip86@gmail.com 			|
+   |====================================================|
+ */
+
+ /**
+  * The Enemy class implements a enemy ship.
+  * The enemy ship has its location (locX,locY) on the screen and the size of the screen.
+  * The Class is also responsible for all the graphics side of the missile. 
+  */
+class Enemy 
+{
+
+    field int locX, locY;	//Represent the location of the enemy ship on she screen
+	
+	field int SCREEN_SIZE;	//Represent the size of the screen
+	field int SIZE;			//Represent the size of the ship block
+
+	//The constructor define the initial X, Y position and the size of the screen and each block of the enemy ship
+    constructor Enemy new() 
+	{
+        let locX = 200;
+        let locY = 0;
+		
+		let SIZE = 3;
+		let SCREEN_SIZE = 510;
+
+        return this;
+    }
+
+	//The function deallocate the object memory
+    method void deAllocEnemy()
+	{
+        do Memory.deAlloc(this);
+        return;
+    }
+
+	//The function draws a enemy ship on the screen
+    method void drawEnemy()
+	{
+		do Screen.setColor(true);
+        do drawShape();
+		return;
+    }
+	
+	//The function erase the enemy ship off the screen
+	method void eraseEnemy()
+	{
+        do Screen.setColor(false);
+		do drawShape();
+        return;
+    }
+	
+	//The function draws the enemy ship shape on the screen
+	method void drawShape()
+	{
+		do Screen.drawRectangle(locX+(SIZE*1), locY+(SIZE*1), locX + (SIZE*6), locY + (SIZE*3));
+		do Screen.drawRectangle(locX+(SIZE*0), locY+(SIZE*0), locX + (SIZE*1), locY + (SIZE*2));
+		do Screen.drawRectangle(locX+(SIZE*6), locY+(SIZE*0), locX + (SIZE*7), locY + (SIZE*2));
+		do Screen.drawRectangle(locX+(SIZE*3), locY+(SIZE*0), locX + (SIZE*4), locY + (SIZE*4));
+		
+		return;
+	}
+	
+	//The function gets the X and Y location of the missile and check if the missile hit the enemy ship
+	method boolean isHit(int missileLocX, int missileLocY)
+	{
+		var boolean hit;
+		let hit = false;
+		
+		if((locX < missileLocX) & (missileLocX <(locX + (SIZE*7))) & ((locY + (SIZE*4)) > missileLocY)) 
+		{
+			let hit = true;
+		}
+		
+		return hit;
+	}
+	
+	//The function responsible on moving the enemy ship and check if it reaches to the end of the screen
+    method void moveEnemy() 
+	{
+		do eraseEnemy();
+		if (locY + 1 < 210)
+		{
+			let locY = locY + 1;            
+			do drawEnemy();
+		}
+		else
+		{
+			do killEnemy();
+		}
+		return;
+        
+	}
+	
+		
+	//The function initial the enemy ship parameters after a hit or reaching to the end of the screen
+	//Its also generate "random" place for the next enemy
+	method void killEnemy()
+	{
+		do eraseEnemy();
+		do generateRandomPlace();
+		let locY = 0;
+		
+		return;
+	}
+	
+	//The function generates random place for the next ship depends on the last place it destroyed 
+	method void generateRandomPlace()
+	{
+		if(locY < ((SCREEN_SIZE+2)/4))
+		{
+			if((locX - locY) > 1)
+			{
+				let locX = locX - locY;
+			}
+			else
+			{
+				let locX = locX + locY;
+			}
+		}
+		else
+		{
+			if((locX + locY) < (SCREEN_SIZE - 9))
+			{
+				let locX = locX + locY;
+			}
+			else
+			{
+				let locX = locX - locY;
+			}
+			
+			let locX = SCREEN_SIZE - locY;
+		}
+		return;
+	}
+	
+}
+
+

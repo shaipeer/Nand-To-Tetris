@@ -1,0 +1,28 @@
+/**
+   |====================================================|
+   |	  	Exercise #  :	 1							|
+   |													|
+   |   	   	File name   :	 Main.jack					|
+   |		Date		:	 14/03/2015    	      		|
+   |		Author    	:	 Shai Pe'er        			|
+   |		Email     	:	 shaip86@gmail.com 			|
+   |====================================================|
+ */
+ 
+ /**
+	The Main class lunches the runGame() which runs the main game routine.
+	When the game is ended, its deAllocate all objects.
+	*/
+class Main 
+{
+    function void main()
+	{
+        var SpaceShipGame spaceShipGame;
+
+        let spaceShipGame = SpaceShipGame.new();
+        do  spaceShipGame.runGame();
+		do  spaceShipGame.deAllocAll();
+
+        return;
+    }
+}

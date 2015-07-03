@@ -1,0 +1,37 @@
+// This file is part of the materials accompanying the book 
+// "The Elements of Computing Systems" by Nisan and Schocken, 
+// MIT Press. Book site: www.idc.ac.il/tecs
+// File name: projects/03/a/RAM8.hdl
+
+/**
+ * Memory of 8 registers, each 16 bit-wide. Out hold the value
+ * stored at the memory location specified by address. If load=1, then 
+ * the in value is loaded into the memory location specified by address 
+ * (the loaded value will be emitted to out after the next time step.)
+ */
+
+CHIP RAM8 {
+    IN in[16], load, address[3];
+    OUT out[16];
+
+    PARTS:
+    
+	//Input
+	DMux8Way (in = load, sel = address, a = loadDMux8A, b = loadDMux8B, c = loadDMux8C, d = loadDMux8D, 
+										e = loadDMux8E, f = loadDMux8F, g = loadDMux8G, h = loadDMux8H);
+
+	//Register
+    Register (in = in, load = loadDMux8A, out = registerOutA);
+    Register (in = in, load = loadDMux8B, out = registerOutB);
+    Register (in = in, load = loadDMux8C, out = registerOutC);
+    Register (in = in, load = loadDMux8D, out = registerOutD);
+    Register (in = in, load = loadDMux8E, out = registerOutE);
+    Register (in = in, load = loadDMux8F, out = registerOutF);
+    Register (in = in, load = loadDMux8G, out = registerOutG);
+    Register (in = in, load = loadDMux8H, out = registerOutH);
+
+	//Output
+    Mux8Way16 (a = registerOutA, b = registerOutB, c = registerOutC, d = registerOutD, 
+			   e = registerOutE, f = registerOutF, g = registerOutG, h = registerOutH, 
+			   sel = address, out = out);
+}

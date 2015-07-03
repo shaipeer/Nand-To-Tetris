@@ -1,0 +1,53 @@
+/**
+ * Instructions:
+ * The purpose of this chip is ID verification. 
+ * The input is a 16 bit number.
+ * The output verified returns 1 only if this number is the same as the last 4 digits of your ID (in a 16 bit binary representation)
+ * The output parity returns 1 if there is an odd number of 1's in the input, 0 otherwise
+ *  (you can read more on parity bit : http://en.wikipedia.org/wiki/Parity_bit)
+ *	
+ * In this ex you must write your 8-digit number in the first line of the README.txt.
+ * It must contain only a 8 digit number, and no other character
+ */
+
+CHIP Verification {
+    IN in[16];  // 1-bit inputs
+    OUT verified, parity;
+	
+
+    PARTS:
+    //1	-	0001
+	//5	-	0101
+	//8	-	1000
+	//0	-	0000
+	//5504
+	//0001010110000000
+	
+	//My id
+	And16(a[15] = false, a[14] = false, a[13] = false, a[12] = true, 
+		  a[11] = false, a[10] = true , a[9]  = false, a[8]  = true,
+		  a[7]  = true , a[6]  = false, a[5]  = false, a[4]  = false,
+		  a[3]  = false, a[2]  = false, a[1]  = false, a[0]  = false,
+		  b = true, out = id);
+	
+	//Verified check
+	ALU  (x = id, y = in,   zx = false, nx = true, zy = false, ny = false, f = true, no = true, out = inminusid, zr = verified, ng = nginout);
+	
+	//Parity check
+	Xor(a = in[0],    b = in[1],  out = xorout1);
+	Xor(a = xorout1,  b = in[2],  out = xorout2);
+	Xor(a = xorout2,  b = in[3],  out = xorout3);
+	Xor(a = xorout3,  b = in[4],  out = xorout4);
+	Xor(a = xorout4,  b = in[5],  out = xorout5);
+	Xor(a = xorout5,  b = in[6],  out = xorout6);
+	Xor(a = xorout6,  b = in[7],  out = xorout7);
+	Xor(a = xorout7,  b = in[8],  out = xorout8);
+	Xor(a = xorout8,  b = in[9],  out = xorout9);
+	Xor(a = xorout9,  b = in[10], out = xorout10);
+	Xor(a = xorout10, b = in[11], out = xorout11);
+	Xor(a = xorout11, b = in[12], out = xorout12);
+	Xor(a = xorout12, b = in[13], out = xorout13);
+	Xor(a = xorout13, b = in[14], out = xorout14);
+	Xor(a = xorout14, b = in[15], out = parity);
+	
+}
